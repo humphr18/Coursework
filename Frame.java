@@ -72,10 +72,18 @@ public class Frame implements ActionListener{
 
 	private int[] array = {0,0,0,0};
 
+//    private int[] the_guess = {0,0,0,0};
+    private int[] the_guess = {0,0,0,0};
+    private int score_counter = 0;
+
 
 	public Frame(){
 		pass = bp1;
 		gn1.getRandom(array);
+        System.out.println(array[0]);
+        System.out.println(array[1]);
+        System.out.println(array[2]);
+        System.out.println(array[3]);
         button_orange.addActionListener(this);
     	button_red.addActionListener(this);
     	button_yellow.addActionListener(this);
@@ -84,8 +92,8 @@ public class Frame implements ActionListener{
     	button_indigo.addActionListener(this);
     	button_violet.addActionListener(this);
 
+        button_panel.add(button_orange);
     	button_panel.add(button_red);
-    	button_panel.add(button_orange);
     	button_panel.add(button_yellow);
     	button_panel.add(button_green);
         button_panel.add(button_blue);
@@ -112,36 +120,62 @@ public class Frame implements ActionListener{
 	}
     public void actionPerformed(ActionEvent e){
 
-    	if (e.getSource() == button_orange){
-    		pass.change(counter, 1);
-    		counter = counter + 1;
-    	}
+        if (e.getSource() == button_orange){
+            pass.change(counter, 1);
+            the_guess[counter] = 1;
+            counter = counter + 1;
+        }
     	if(e.getSource() == button_red){
     		pass.change(counter, 2 );
+            the_guess[counter] = 2;
     		counter = counter + 1;
     	}
     	if(e.getSource() == button_yellow){
     		pass.change(counter, 3);
-    		counter = counter + 1;
+            the_guess[counter] = 3;
+            counter = counter + 1;
     	}
     	if(e.getSource() == button_green){
     		pass.change(counter, 4);
-    		counter = counter + 1;
+            the_guess[counter] = 4;
+            counter = counter + 1;
     	}
     	if(e.getSource() == button_blue){
     		pass.change(counter, 5);
-    		counter = counter + 1;
+            the_guess[counter] = 5;
+            counter = counter + 1;
     	}
     	if(e.getSource() == button_indigo){
     		pass.change(counter, 6);
-    		counter = counter + 1;
+            the_guess[counter] = 6;
+            counter = counter + 1;
     	}
     	if(e.getSource() == button_violet){
     		pass.change(counter, 7);
-    		counter = counter + 1;
+            the_guess[counter] = 7;
+            counter = counter + 1;
     	}
+        if(counter == 4){
+            while(score_counter < 4 ){
+
+
+                if(array[score_counter] == the_guess[score_counter]){
+                    pass.correctPosition(score_counter);
+                }
+                else if((array[0] == the_guess[score_counter] || array[1] == the_guess[score_counter] || array[2] == the_guess[score_counter] || array[3] == the_guess[score_counter]) && array[score_counter] != the_guess[score_counter]){
+                    pass.almostCorrect(score_counter);
+                }
+                else{
+                    pass.you_couldnt_be_any_more_wrong(score_counter);
+                }
+
+                score_counter = score_counter + 1;
+            }
+        }
+        score_counter = 0;
     	if(counter == 4){
-    		counter =  0;
+            counter= 0;
+
     		if(outer_counter == 0){
     			pass = bp2;
     		}
@@ -163,7 +197,4 @@ public class Frame implements ActionListener{
     	outer_counter = outer_counter + 1;
     	}
     }
-
-   
-
 }
